@@ -1,0 +1,230 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| emp                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> USE EMP;
+Database changed
+mysql> SHOW TABLES;
+Empty set (0.01 sec)
+
+mysql> CREATE TABLE BACKUPEMPLOYESS AS SELECT*FROM EMPLOYESS;
+ERROR 1146 (42S02): Table 'emp.employess' doesn't exist
+mysql> USE PFS4
+Database changed
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> tee C:\Codegnan MySQL\MySQL Notes\day6
+Logging to file 'C:\Codegnan MySQL\MySQL Notes\day6'
+mysql> USE PFS4;
+Database changed
+mysql> ^C
+mysql> CREATE TABLE BACKUPEMPLOYEES AS SELECT*FROM EMPLOYEES;
+ERROR 1146 (42S02): Table 'pfs4.employees' doesn't exist
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> DESC COMPANY_STAFF;
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+| Field           | Type                                               | Null | Key | Default | Extra |
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+| COMPANY_NAME    | varchar(30)                                        | YES  |     | NULL    |       |
+| EMP_ID          | int                                                | YES  |     | NULL    |       |
+| AGE             | tinyint                                            | YES  |     | NULL    |       |
+| EXPERIENCE      | smallint                                           | YES  |     | NULL    |       |
+| GENDER          | char(1)                                            | YES  |     | NULL    |       |
+| EMPLOYEE_NAME   | varchar(30)                                        | YES  |     | NULL    |       |
+| QUALIFICATION   | varchar(30)                                        | YES  |     | NULL    |       |
+| ADDRESS         | tinytext                                           | YES  |     | NULL    |       |
+| SALARY          | decimal(20,3)                                      | YES  |     | NULL    |       |
+| DEPARTMENT      | enum('HR','IT','Sales','Finance','Support')        | YES  |     | NULL    |       |
+| STATUS          | varchar(30)                                        | YES  |     | NULL    |       |
+| SKILLS          | set('Java','Python','SQL','Excel','Communication') | YES  |     | NULL    |       |
+| LAST_UPDATED    | varchar(30)                                        | YES  |     | NULL    |       |
+| DATE_OF_JOINING | date                                               | YES  |     | NULL    |       |
+| EMAIL           | varchar(30)                                        | YES  |     | NULL    |       |
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+15 rows in set (0.01 sec)
+
+mysql> CREATE TABLE PRODUCT(
+    -> PRODUCTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PRODUCTNAME VARCHAR(20),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2) GENERATED ALWAYS AS (PRICE*QUANTITY)STORED);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC COMPANY_STAFF;
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+| Field           | Type                                               | Null | Key | Default | Extra |
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+| COMPANY_NAME    | varchar(30)                                        | YES  |     | NULL    |       |
+| EMP_ID          | int                                                | YES  |     | NULL    |       |
+| AGE             | tinyint                                            | YES  |     | NULL    |       |
+| EXPERIENCE      | smallint                                           | YES  |     | NULL    |       |
+| GENDER          | char(1)                                            | YES  |     | NULL    |       |
+| EMPLOYEE_NAME   | varchar(30)                                        | YES  |     | NULL    |       |
+| QUALIFICATION   | varchar(30)                                        | YES  |     | NULL    |       |
+| ADDRESS         | tinytext                                           | YES  |     | NULL    |       |
+| SALARY          | decimal(20,3)                                      | YES  |     | NULL    |       |
+| DEPARTMENT      | enum('HR','IT','Sales','Finance','Support')        | YES  |     | NULL    |       |
+| STATUS          | varchar(30)                                        | YES  |     | NULL    |       |
+| SKILLS          | set('Java','Python','SQL','Excel','Communication') | YES  |     | NULL    |       |
+| LAST_UPDATED    | varchar(30)                                        | YES  |     | NULL    |       |
+| DATE_OF_JOINING | date                                               | YES  |     | NULL    |       |
+| EMAIL           | varchar(30)                                        | YES  |     | NULL    |       |
++-----------------+----------------------------------------------------+------+-----+---------+-------+
+15 rows in set (0.01 sec)
+
+mysql> DESC PRODUCT;
++-------------+---------------+------+-----+---------+------------------+
+| Field       | Type          | Null | Key | Default | Extra            |
++-------------+---------------+------+-----+---------+------------------+
+| PRODUCTID   | int           | NO   | PRI | NULL    | auto_increment   |
+| PRODUCTNAME | varchar(20)   | YES  |     | NULL    |                  |
+| PRICE       | decimal(10,2) | YES  |     | NULL    |                  |
+| QUANTITY    | int           | YES  |     | NULL    |                  |
+| TOTALAMOUNT | decimal(10,2) | YES  |     | NULL    | STORED GENERATED |
++-------------+---------------+------+-----+---------+------------------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO PRODUCT (PRODUCTNAME,PRICE,QUANTITY)VALUES
+    -> ('SMART PHONE',19999.99,2);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> DESC PRODUCT;
++-------------+---------------+------+-----+---------+------------------+
+| Field       | Type          | Null | Key | Default | Extra            |
++-------------+---------------+------+-----+---------+------------------+
+| PRODUCTID   | int           | NO   | PRI | NULL    | auto_increment   |
+| PRODUCTNAME | varchar(20)   | YES  |     | NULL    |                  |
+| PRICE       | decimal(10,2) | YES  |     | NULL    |                  |
+| QUANTITY    | int           | YES  |     | NULL    |                  |
+| TOTALAMOUNT | decimal(10,2) | YES  |     | NULL    | STORED GENERATED |
++-------------+---------------+------+-----+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO PRODUCT (PRODUCTNAME,PRICE,QUANTITY)VALUES
+    -> ('SMART PHONE',19999.99,2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM PRODUCT
+    -> ;
++-----------+-------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-------------+----------+----------+-------------+
+|         1 | SMART PHONE | 19999.99 |        2 |    39999.98 |
+|         2 | SMART PHONE | 19999.99 |        2 |    39999.98 |
++-----------+-------------+----------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE PRODUCT SET PRICE=18000.89 WHERE PRODUCTID=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM PRODUCT;
++-----------+-------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-------------+----------+----------+-------------+
+|         1 | SMART PHONE | 19999.99 |        2 |    39999.98 |
+|         2 | SMART PHONE | 18000.89 |        2 |    36001.78 |
++-----------+-------------+----------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE PRODUCT;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT (PRODUCTNAME,PRICE,QUANTITY)VALUES
+    -> ('HEADPHONES',39999.89,4),
+    -> ('HEADPHONES',39999.89,4),
+    -> ('HEADPHONES',39999.89,4);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE STUDENTS (
+    ->  NAME VARCHAR(30),
+    -> STUDENTID AUTO_INCREMENT PRIMARY KEY,
+    -> SMOB VARCHAR(10),
+    -> SMARKS INT(3));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTO_INCREMENT PRIMARY KEY,
+SMOB VARCHAR(10),
+SMARKS INT(3))' at line 3
+mysql> CREATE TABLE STUDENTS (
+    -> NAME VARCHAR(30),
+    -> STUDENTID AUTO_INCREMENT PRIMARY KEY,
+    -> SMOB VARCHAR(10),
+    -> SMARKS INT(3)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTO_INCREMENT PRIMARY KEY,
+SMOB VARCHAR(10),
+SMARKS INT(3)
+)' at line 3
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| emp                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE STUDENTS(
+    -> STUDENTID AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(30),
+    -> SMOB VARCHAR(10),
+    -> SMARKS INT(3)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTO_INCREMENT PRIMARY KEY,
+NAME VARCHAR(30),
+SMOB VARCHAR(10),
+SMARKS INT(3)
+)' at line 2
+mysql> CREATE TABLE STUDENTS(
+    -> STUDENTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> SMOB VARCHAR(10),
+    -> NAME VARCHAR(30),
+    -> SMARKS INT(3)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+mysql> INSERT INTO STUDENTS(NAME,SMOB,SMARKS)VALUES
+    -> ('KUMAR','9087559876',99),
+    -> ('PRASAD','9084494446',99),
+    -> ('ROHITH','9084478446',98),
+    -> ('UPENDRA','9084477334',77);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENTS;
++-----------+------------+---------+--------+
+| STUDENTID | SMOB       | NAME    | SMARKS |
++-----------+------------+---------+--------+
+|         1 | 9087559876 | KUMAR   |     99 |
+|         2 | 9084494446 | PRASAD  |     99 |
+|         3 | 9084478446 | ROHITH  |     98 |
+|         4 | 9084477334 | UPENDRA |     77 |
++-----------+------------+---------+--------+
+4 rows in set (0.01 sec)
