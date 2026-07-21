@@ -1,0 +1,327 @@
+DML (DATA MANIPULATION LANGUAGE)
+====================================
+1.Insert
+===========
+syntax - insert into table-name(column-names)values(column-values);
+
+
+mysql> use pfs4;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| employess      |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql> DESC EMPLOYESS;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | char(5)     | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(30) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(30) | YES  |     | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
+| DOJ       | date        | YES  |     | NULL    |       |
+| ADDRESS   | tinytext    | YES  |     | NULL    |       |
+| DEPT      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> INSERT INTO EMPLOYESS(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)VALUES(
+    -> 'E001','ROHITH','SHANTHI','21','2004-11-22','VIZAG','PYTHON');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E001  | ROHITH    | SHANTHI  |   21 | 2004-11-22 | VIZAG   | PYTHON |
++-------+-----------+----------+------+------------+---------+--------+
+1 row in set (0.01 sec)
+
+mysql> INSERT INTO EMPLOYESS(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)VALUES
+    -> ('E002','KABIR','SHAIK','22','2004-11-23','HYD','PYTHON'),
+    -> ('E003','KAMALA','KALAHASTHI','30','2000-11-24','NRPM','PYTHON');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+------------+------+------------+---------+--------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON |
++-------+-----------+------------+------+------------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYESS (FIRSTNAME,DOJ,AGE,DEPT,ADDRESS,LASTNAME,EMID)VALUES
+    -> ('NAGESH','2001-01-01','31','SALES','VIZAG','ALLU','E004');
+ERROR 1054 (42S22): Unknown column 'EMID' in 'field list'
+mysql> INSERT INTO EMPLOYESS (FIRSTNAME,DOJ,AGE,DEPT,ADDRESS,LASTNAME,EMID)VALUES
+    -> ('NAGESH','2001-01-01','31','SALES','VIZAG','ALLU','E004');
+ERROR 1054 (42S22): Unknown column 'EMID' in 'field list'
+mysql>  INSERT INTO EMPLOYESS (FIRSTNAME,DOJ,AGE,DEPT,ADDRESS,LASTNAME,EMPID)VALUES
+    -> ('NAGESH','2001-01-01','31','SALES','VIZAG','ALLU','E004');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+------------+------+------------+---------+--------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES  |
++-------+-----------+------------+------+------------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYESS VALUES
+    -> ('E005','KARTHIK','CH',21,'2027-10-10','NRPM','SALES');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+------------+------+------------+---------+--------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES  |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES  |
++-------+-----------+------------+------+------------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYESS VALUES
+    -> ('E006','TEJA','PASI',23,'2029-12-12','VZM','SALES'),
+    -> ('E007','DILEEP','KONDA',24,'2027-04-12','VSP','ACCOUNTS');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT     |
++-------+-----------+------------+------+------------+---------+----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON   |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON   |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON   |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES    |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES    |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES    |
+| E007  | DILEEP    | KONDA      |   24 | 2027-04-12 | VSP     | ACCOUNTS |
++-------+-----------+------------+------+------------+---------+----------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    -> ('E008','ROHITH','2031-12-06','MARKETING');
+ERROR 1146 (42S02): Table 'pfs4.employees' doesn't exist
+mysql>  INSERT INTO EMPLOYESS(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    ->  ('E008','ROHITH','2031-12-06','MARKETING');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON    |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | KONDA      |   24 | 2027-04-12 | VSP     | ACCOUNTS  |
+| E008  | ROHITH    | NULL       | NULL | 2031-12-06 | NULL    | MARKETING |
++-------+-----------+------------+------+------------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYESS SET
+    -> EMPID='E009',
+    -> FIRSTNAME='UPENDRA',
+    -> LASTNAME='KALA',
+    -> AGE=20,
+    -> DOJ='2021-02-02',
+    -> ADDRESS='VSP',
+    -> DEPT='ACCOUNTS';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON    |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | KONDA      |   24 | 2027-04-12 | VSP     | ACCOUNTS  |
+| E008  | ROHITH    | NULL       | NULL | 2031-12-06 | NULL    | MARKETING |
+| E009  | UPENDRA   | KALA       |   20 | 2021-02-02 | VSP     | ACCOUNTS  |
++-------+-----------+------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+
+UPDATE
+==========
+syntax - UPDATE TABLE-NAME SET COLUMN-NAME = UPDATE-VALUE WHERE SOME CONDITION;
+
+
+mysql> UPDATE EMPLOYESS SET LASTNAME = 'ANITHA' WHERE EMPID='E007';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | PYTHON    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | PYTHON    |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | ANITHA     |   24 | 2027-04-12 | VSP     | ACCOUNTS  |
+| E008  | ROHITH    | NULL       | NULL | 2031-12-06 | NULL    | MARKETING |
+| E009  | UPENDRA   | KALA       |   20 | 2021-02-02 | VSP     | ACCOUNTS  |
++-------+-----------+------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E007';
++-------+-----------+----------+------+------------+---------+----------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT     |
++-------+-----------+----------+------+------------+---------+----------+
+| E007  | DILEEP    | ANITHA   |   24 | 2027-04-12 | VSP     | ACCOUNTS |
++-------+-----------+----------+------+------------+---------+----------+
+1 row in set (0.01 sec)
+
+mysql> UPDATE EMPLOYESS SET LASTNAME='KONDA',AGE=26,ADDRESS='KOL' WHERE EMPID='E007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E007';
++-------+-----------+----------+------+------------+---------+----------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT     |
++-------+-----------+----------+------+------------+---------+----------+
+| E007  | DILEEP    | KONDA    |   26 | 2027-04-12 | KOL     | ACCOUNTS |
++-------+-----------+----------+------+------------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYESS SET LASTNAME='SANDEEP',AGE=24,ADDRESS='VSP' WHERE EMPID='E008';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E008';
++-------+-----------+----------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------+------+------------+---------+-----------+
+| E008  | ROHITH    | SANDEEP  |   24 | 2031-12-06 | VSP     | MARKETING |
++-------+-----------+----------+------+------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYESS SET DEPT='FINANCE' WHERE EMPID='E007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEES WHERE EMPID='E007';
+ERROR 1146 (42S02): Table 'pfs4.employees' doesn't exist
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E007';
++-------+-----------+----------+------+------------+---------+---------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT    |
++-------+-----------+----------+------+------------+---------+---------+
+| E007  | DILEEP    | KONDA    |   26 | 2027-04-12 | KOL     | FINANCE |
++-------+-----------+----------+------+------------+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYESS SET DEPT='DEVOPS' WHERE EMPID='E002';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E002';
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E002  | KABIR     | SHAIK    |   22 | 2004-11-23 | HYD     | DEVOPS |
++-------+-----------+----------+------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYESS SET DEPT='ACCOUNTS' WHERE EMPID='E003';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYESS WHERE EMPID='E003';
++-------+-----------+------------+------+------------+---------+----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT     |
++-------+-----------+------------+------+------------+---------+----------+
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | ACCOUNTS |
++-------+-----------+------------+------+------------+---------+----------+
+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | DEVOPS    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | ACCOUNTS  |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E005  | KARTHIK   | CH         |   21 | 2027-10-10 | NRPM    | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | KONDA      |   26 | 2027-04-12 | KOL     | FINANCE   |
+| E008  | ROHITH    | SANDEEP    |   24 | 2031-12-06 | VSP     | MARKETING |
+| E009  | UPENDRA   | KALA       |   20 | 2021-02-02 | VSP     | ACCOUNTS  |
++-------+-----------+------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+DELETE
+========
+
+mysql> DELETE FROM EMPLOYESS WHERE FIRSTNAME='KARTHIK';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | DEVOPS    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | ACCOUNTS  |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | KONDA      |   26 | 2027-04-12 | KOL     | FINANCE   |
+| E008  | ROHITH    | SANDEEP    |   24 | 2031-12-06 | VSP     | MARKETING |
+| E009  | UPENDRA   | KALA       |   20 | 2021-02-02 | VSP     | ACCOUNTS  |
++-------+-----------+------------+------+------------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYESS WHERE EMPID='E009';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
++-------+-----------+------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME   | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+------------+------+------------+---------+-----------+
+| E001  | ROHITH    | SHANTHI    |   21 | 2004-11-22 | VIZAG   | PYTHON    |
+| E002  | KABIR     | SHAIK      |   22 | 2004-11-23 | HYD     | DEVOPS    |
+| E003  | KAMALA    | KALAHASTHI |   30 | 2000-11-24 | NRPM    | ACCOUNTS  |
+| E004  | NAGESH    | ALLU       |   31 | 2001-01-01 | VIZAG   | SALES     |
+| E006  | TEJA      | PASI       |   23 | 2029-12-12 | VZM     | SALES     |
+| E007  | DILEEP    | KONDA      |   26 | 2027-04-12 | KOL     | FINANCE   |
+| E008  | ROHITH    | SANDEEP    |   24 | 2031-12-06 | VSP     | MARKETING |
++-------+-----------+------------+------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE EMPLOYESS;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
+Empty set (0.01 sec)
+
+mysql> DROP TABLE EMPLOYESS;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM EMPLOYESS;
+ERROR 1146 (42S02): Table 'pfs4.employess' doesn't exist
